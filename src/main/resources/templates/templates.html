@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список шаблонів</title>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<h1>Список шаблонів</h1>
+<a href="#" th:href="@{/templates/new}">Додати новий шаблон</a>
+<form action="#" th:action="@{/templates/search}" method="get">
+    <input type="text" name="query" placeholder="Пошук за назвою">
+    <button type="submit">Пошук</button>
+</form>
+<form action="#" th:action="@{/templates/sort}" method="get">
+    <button type="submit">Сортувати за оновленням</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Оновлено</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="template : ${templates}">
+        <td th:text="${template.id}">ID</td>
+        <td th:text="${template.name}">Назва</td>
+        <td th:text="${template.updatedAt}">Оновлено</td>
+        <td>
+            <a th:href="@{/templates/edit/{id}(id=${template.id})}">Редагувати</a>
+            <a th:href="@{/templates/delete/{id}(id=${template.id})}" onclick="return confirm('Ви впевнені, що хочете видалити цей шаблон?');">Видалити</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
