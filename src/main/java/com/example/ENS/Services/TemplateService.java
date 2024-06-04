@@ -1,14 +1,20 @@
 package com.example.ENS.Services;
 
 import com.example.ENS.Models.Template;
+import com.example.ENS.Models.User;
 import com.example.ENS.Repositories.TemplateRepository;
+import com.example.ENS.Repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TemplateService {
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TemplateRepository templateRepository;
@@ -45,6 +51,10 @@ public class TemplateService {
 
     public List<Template> getAllTemplatesSortedByUpdatedAt() {
         return templateRepository.findAllOrderByUpdatedAtDesc();
+    }
+
+    public void addUser(User user) {
+        userRepository.save(user);
     }
 
 }

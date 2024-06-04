@@ -1,9 +1,11 @@
 package com.example.ENS.Controllers;
 
 import com.example.ENS.Models.Template;
+import com.example.ENS.Models.User;
 import com.example.ENS.Services.TemplateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,7 @@ public class TemplateController {
     }
 
     @PostMapping("/new")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public String createTemplate(@Valid @ModelAttribute Template template) {
         templateService.createTemplate(template);
         return "redirect:/templates";
@@ -56,6 +59,7 @@ public class TemplateController {
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteTemplate(@PathVariable Long id) {
         templateService.deleteTemplate(id);
         return "redirect:/templates";
